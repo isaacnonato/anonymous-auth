@@ -1,15 +1,23 @@
-import express from 'express'
-import signIn from './handlers/signIn.js'
-import bodyParser from 'body-parser'
-import signUp from './handlers/signUp.js'
+import bodyParser from 'body-parser';
+import express from 'express';
+import auth from './middleware/auth.js'
 
-const server = express()
-server.use(express.json())
-server.get('/', () => { console.log(1) })
+import signIn from './handlers/signIn.js';
+import signUp from './handlers/signUp.js';
 
-server.use(express.urlencoded( { extended: true } ))
-server.get('/signIn', signIn)
+const server = express();
+server.use(express.json());
+server.get('/', () => { console.log(1); });
 
-server.get('/signUp', signUp)
+server.use(express.urlencoded({extended : true}));
+server.get('/signIn', signIn);
 
-server.listen(3000, () => { console.log(3) })
+server.get('/signUp', signUp);
+
+server.get('/welcome', auth, (req, res) => {
+  res.status(200).json({ Welcome: "Welcome!" })
+})
+
+server.listen(3000, () => {
+  console.log(3);
+});

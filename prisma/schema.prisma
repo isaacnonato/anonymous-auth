@@ -11,7 +11,8 @@ datasource db {
 }
 
 model User {
-  identifier String @id
-  password   String
-  name       String?
+  identifier     String @id
+  passwordHash   String 
+  token          String?
+  name           String?
 }
